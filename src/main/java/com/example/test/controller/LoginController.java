@@ -3,11 +3,9 @@ package com.example.test.controller;
 import com.example.test.bean.UserBean;
 import com.example.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class LoginController {
 
     //将Service注入Web层
@@ -19,14 +17,31 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/loginIn",method = RequestMethod.POST)
-    public String login(String name,String password){
+    @GetMapping("/valid_login")
+    public boolean login(@RequestParam(value="username", required = false, defaultValue = "") String name,
+                         @RequestParam(value="password", required = false, defaultValue = "") String password){
         UserBean userBean = userService.loginIn(name,password);
-        if(userBean!=null){
-            return "success";
-        }else {
-            return "error";
-        }
+        System.out.println("Received Username: "+ name);
+        System.out.println("Received Password: "+ password);
+        System.out.print("Return: ");
+        System.out.println(userBean != null);
+        return userBean != null;
+    }
+    @GetMapping("/check_username")
+    public boolean check_username(@RequestParam(value="username", required = false, defaultValue = "") String name){
+        UserBean userBean = userService.check_username(name);
+        System.out.println("Received Username: "+ name);
+        System.out.print("Return: ");
+        System.out.println(userBean != null);
+        return userBean != null;
+    }
+
+    @GetMapping("/add_user")
+    public void add_user(@RequestParam(value="username", required = false, defaultValue = "") String name,
+                         @RequestParam(value="password", required = false, defaultValue = "") String password){
+        System.out.println("Received Username: "+ name);
+        System.out.println("Received Password: "+ password);
+        userService.add_user(name, password);
     }
 
 

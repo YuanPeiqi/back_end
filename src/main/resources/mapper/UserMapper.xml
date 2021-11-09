@@ -5,5 +5,10 @@
     <select id="getInfo" parameterType="String" resultType="com.example.test.bean.UserBean">
         SELECT * FROM user WHERE name = #{name} AND password = #{password}
     </select>
-
+    <select id="check_username" parameterType="String" resultType="com.example.test.bean.UserBean">
+        SELECT * FROM user WHERE name = #{name}
+    </select>
+    <insert id="add_user" parameterType="String">
+        insert into user(name, password) value(#{name},#{password})
+    </insert>
 </mapper>

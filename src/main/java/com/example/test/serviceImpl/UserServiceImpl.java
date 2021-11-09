@@ -17,4 +17,14 @@ public class UserServiceImpl implements UserService {
     public UserBean loginIn(String name, String password) {
         return userMapper.getInfo(name,password);
     }
+
+    @Override
+    public UserBean check_username(String name) {
+        return userMapper.check_username(name);
+    }
+
+    @Override
+    public void add_user(String name, String password) {
+        userMapper.add_user(name, password);
+    }
 }
